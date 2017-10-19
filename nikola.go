@@ -1,4 +1,4 @@
-// A package to make testing easier.
+// A package to make testing easier. Requires Go 1.9.
 package nikola
 
 import "testing"
