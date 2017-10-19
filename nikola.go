@@ -1,45 +1,74 @@
+// A package to make testing easier.
 package nikola
 
 import "testing"
 
-func AssertTrue(t *testing.T, expr bool, ifFalse func()) {
+// The template that is used when two things should equal each other.
+var ExpectEqualsTemplate string = "expected : %v\nactual   : %v"
+
+// The template that is used when a value should not be the value specified.
+var ExpectNotEqualsTemplate string = "expected : !%v\nactual   : %v"
+
+// Asserts that a value should be true. Calls testing.Fatalf if false.
+func AssertTrue(t *testing.T, expr bool) {
 	t.Helper()
 	if !expr {
-		ifFalse()
+		t.Fatalf(ExpectedEqualsTemplate, true, expr)
 	}
 }
 
-func AssertFalse(t *testing.T, expr bool, ifTrue func()) {
+// Asserts that a value should be false. Calls testing.Fatalf if true.
+func AssertFalse(t *testing.T, expr bool) {
 	t.Helper()
-	AssertTrue(t, !expr, ifTrue)
+	if expr {
+		t.Fatalf(ExpectedEqualsTemplate, false, expr)
+	}
 }
 
-func AssertNotEqual(t *testing.T, expected, actual interface{}, ifEq func()) {
+// Asserts that two values should be equal. Calls testing.Fatalf if not equal.
+func AssertEqual(t *testing.T, expected, actual interface{}) {
 	t.Helper()
-	AssertFalse(t, expected == actual, ifEq)
+	if expected != actual {
+		t.Fatalf(ExpectedEqualsTemplate, expected, actual)
+	}
 }
 
-func AssertEqual(t *testing.T, expected, actual interface{}, notEq func()) {
+// Asserts that two values should not be equal. Calls testing.Fatalf if equal.
+func AssertNotEqual(t *testing.T, expectedNot, actual interface{}) {
 	t.Helper()
-	AssertTrue(t, expected == actual, notEq)
+	if expected == actual {
+		t.Fatalf(ExpectedNotEqualsTemplate, expectedNot, actual)
+	}
 }
 
-func AssertTrueWithError(t *testing.T, expr bool) {
+// Suggests that the provided value should be true. Calls testing.Errorf if false.
+func SuggestTrue(t *testing.T, expr bool) {
 	t.Helper()
-	AssertTrue(t, expr, func() { t.Errorf("expr is false, but should be true") })
+	if !expr {
+		t.Errorf(ExpectedEqualsTemplate, true, expr)
+	}
 }
 
-func AssertFalseWithError(t *testing.T, expr bool) {
+// Suggests that the provided value should be false. Calls testing.Errorf if true.
+func SuggestFalse(t *testing.T, expr bool) {
 	t.Helper()
-	AssertFalse(t, expr, func() { t.Errorf("expr is true, but should be false") })
+	if expr {
+		t.Errorf(ExpectedEqualsTemplate, false, expr)
+	}
 }
 
-func AssertEqualWithError(t *testing.T, expected, actual interface{}) {
+// Suggests that two values should be equal. Calls testing.Errorf if not equal.
+func SuggestEqual(t *testing.T, expected, actual interface{}) {
 	t.Helper()
-	AssertIntEqual(t, expected, actual, func() { t.Errorf("Actual: %v, Expected: %v\n", expected, actual) })
+	if expected != actual {
+		t.Errorf(ExpectedEqualsTemplate, expected, actual)
+	}
 }
 
-func AssertEqualWithFatal(t *testing.T, expected, actual interface{}) {
+// Suggests that two values should not be equal. Calls testing.Errorf if equal.
+func SuggestNotEqual(t *testing.T, expectedNot, actual interface{}) {
 	t.Helper()
-	AssertIntEqual(t, expected, actual, func() { t.Errorf("Actual: %v, Expected: %v\n", expected, actual) })
+	if expected == actual {
+		t.Errorf(ExpectedNotEqualsTemplate, expectedNot, actual)
+	}
 }
