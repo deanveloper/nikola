@@ -1,4 +1,7 @@
-// A package to make testing easier. Requires Go 1.9.
+// The way to make testing easier. Requires Go 1.9
+//
+// The package is made to remove much of the boilerplate
+// code that comes with creating tests in Go.
 package nikola
 
 import "testing"
