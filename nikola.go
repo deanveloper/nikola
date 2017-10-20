@@ -7,10 +7,10 @@ package nikola
 import "testing"
 
 // The template that is used when two things should equal each other.
-var ExpectEqualsTemplate string = "expected : %v\nactual   : %v"
+var ExpectedEqualsTemplate string = "expected : %v\nactual   : %v"
 
 // The template that is used when a value should not be the value specified.
-var ExpectNotEqualsTemplate string = "expected : !%v\nactual   : %v"
+var ExpectedNotEqualsTemplate string = "expected : !%v\nactual   : %v"
 
 // Asserts that a value should be true. Calls testing.Fatalf if false.
 func AssertTrue(t *testing.T, expr bool) {
@@ -39,7 +39,7 @@ func AssertEqual(t *testing.T, expected, actual interface{}) {
 // Asserts that two values should not be equal. Calls testing.Fatalf if equal.
 func AssertNotEqual(t *testing.T, expectedNot, actual interface{}) {
 	t.Helper()
-	if expected == actual {
+	if expectedNot == actual {
 		t.Fatalf(ExpectedNotEqualsTemplate, expectedNot, actual)
 	}
 }
@@ -71,7 +71,7 @@ func SuggestEqual(t *testing.T, expected, actual interface{}) {
 // Suggests that two values should not be equal. Calls testing.Errorf if equal.
 func SuggestNotEqual(t *testing.T, expectedNot, actual interface{}) {
 	t.Helper()
-	if expected == actual {
+	if expectedNot == actual {
 		t.Errorf(ExpectedNotEqualsTemplate, expectedNot, actual)
 	}
 }

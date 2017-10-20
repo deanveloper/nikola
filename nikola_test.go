@@ -5,10 +5,9 @@ import (
 	"time"
 )
 
+// Example which shows that "Assert" will halt the test if
+// it fails. Does this by asserting several things, one of which is false.
 func ExampleAssertTrue() {
-	// Example which shows that "Assert" will halt the test if
-	// it fails. Does this by asserting several things, one of which is false.
-
 	nikola.AssertTrue(t, 5*time.Hour < 1000*time.Minute)
 	nikola.AssertTrue(t, time.Millisecond < time.Second)
 	nikola.AssertTrue(t, time.Hour < 50*time.Minute)
@@ -23,17 +22,16 @@ func ExampleAssertTrue() {
 	// <details about error from gotest>
 }
 
-func ExampleAssertEquals() {
-	// Shows how AssertEquals can be used to provide more
-	// detailed error messages within tests than AssertTrue.
-
-	nikola.AssertEquals(t, "1ms", time.Millisecond.String())
-	nikola.AssertEquals(t, "5h0m0s", (5 * time.Hour).String())
-	nikola.AssertEquals(t, "10m0s", (20 * time.Minute).String())
+// Shows how AssertEquals can be used to provide more
+// detailed error messages within tests than AssertTrue.
+func ExampleAssertEqual() {
+	nikola.AssertEqual(t, "1ms", time.Millisecond.String())
+	nikola.AssertEqual(t, "5h0m0s", (5 * time.Hour).String())
+	nikola.AssertEqual(t, "10m0s", (20 * time.Minute).String())
 	// Execution stops here as the test has failed.
 
 	// Never gets run as the previous assertion failed.
-	nikola.AssertEquals(t, "24h0m0s", (24 * time.Hour).String())
+	nikola.AssertEqual(t, "24h0m0s", (24 * time.Hour).String())
 
 	// Output:
 	// expected : 10m0s
@@ -41,10 +39,9 @@ func ExampleAssertEquals() {
 	// <details about error from gotest>
 }
 
+// Example which shows that "Suggest" will not halt the test if
+// it fails.
 func ExampleSuggestTrue() {
-	// Example which shows that "Suggest" will not halt the test if
-	// it fails.
-
 	nikola.SuggestTrue(t, 5*time.Hour < 1000*time.Minute)
 	nikola.SuggestTrue(t, time.Millisecond < time.Second)
 	nikola.SuggestTrue(t, time.Hour < 50*time.Minute)
@@ -63,17 +60,16 @@ func ExampleSuggestTrue() {
 	// <details about second error from gotest>
 }
 
-func ExampleSuggestEquals() {
-	// Shows how AssertEquals can be used to provide more
-	// detailed error messages within tests than AssertTrue.
-
-	nikola.SuggestEquals(t, "1ms", time.Millisecond.String())
-	nikola.SuggestEquals(t, "5h0m0s", (5 * time.Hour).String())
-	nikola.SuggestEquals(t, "10m0s", (20 * time.Minute).String())
+// Shows how AssertEquals can be used to provide more
+// detailed error messages within tests than AssertTrue.
+func ExampleSuggestEqual() {
+	nikola.SuggestEqual(t, "1ms", time.Millisecond.String())
+	nikola.SuggestEqual(t, "5h0m0s", (5 * time.Hour).String())
+	nikola.SuggestEqual(t, "10m0s", (20 * time.Minute).String())
 	// Error is logged, but execution still continues.
 
-	nikola.SuggestEquals(t, "24h0m0s", (24 * time.Hour).String())
-	nikola.SuggestEquals(t, "5s", (50000 * time.Millisecond).String())
+	nikola.SuggestEqual(t, "24h0m0s", (24 * time.Hour).String())
+	nikola.SuggestEqual(t, "5s", (50000 * time.Millisecond).String())
 	// This error is also logged.
 
 	// Output:
