@@ -3,7 +3,10 @@ package nikola_test
 import (
 	"github.com/deanveloper/nikola"
 	"time"
+	"testing"
 )
+
+var t = new(testing.T) // added to fix compilation
 
 // Example which shows that "Assert" will halt the test if
 // it fails. Does this by asserting several things, one of which is false.
